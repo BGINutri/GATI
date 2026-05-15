@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>🍲 肠格·罗盘 · 十六型肠道人格测试</title>
+    <title>🍲 肠格·罗盘 · 十六型肠道人格</title>
     <!-- 字体与图标 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -211,19 +211,13 @@
             font-weight: 800;
             letter-spacing: 5px;
             color: #5a3a22;
-            margin: 6px 0 2px;
-        }
-        .type-nickname {
-            font-size: 1.6rem;
-            font-weight: 650;
-            color: #9e724b;
-            margin-bottom: 18px;
+            margin: 6px 0 4px;
         }
         .illustration-placeholder {
             background: #efe3d2;
             border-radius: 32px;
             padding: 22px 12px;
-            margin: 18px 0 22px;
+            margin: 18px auto 22px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -232,13 +226,32 @@
             color: #937a59;
             font-size: 0.9rem;
             gap: 10px;
+            width: 90%;
         }
         .illustration-placeholder i {
-            font-size: 3.2rem;
+            font-size: 3rem;
             opacity: 0.7;
         }
+        .type-nickname {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #9e724b;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        .type-slogan {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #b87a47;
+            background: #fef0e2;
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 40px;
+            margin-bottom: 16px;
+            letter-spacing: 0.3px;
+        }
         .dimension-bars {
-            margin: 28px 0 18px;
+            margin: 28px 0 20px;
             text-align: left;
         }
         .dimension-item {
@@ -290,14 +303,7 @@
             font-size: 0.96rem;
             line-height: 1.55;
             color: #302016;
-        }
-        .dimension-scores {
-            margin-top: 18px;
-            padding: 14px;
-            background: #f2e6d9;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: #5c3f28;
+            text-align: left;
         }
         .action-group {
             display: flex;
@@ -306,15 +312,7 @@
         .hidden {
             display: none !important;
         }
-        .footer-note {
-            margin-top: 24px;
-            font-size: 0.7rem;
-            color: #ab8b6b;
-            text-align: center;
-        }
-        i {
-            pointer-events: none;
-        }
+        /* 移除所有额外分数列表的样式，不再有任何“耐受度: xx/20分 → ”的独立块 */
     </style>
 </head>
 <body>
@@ -356,20 +354,24 @@
         </div>
     </div>
 
-    <!-- 结果区 -->
+    <!-- 结果区 (已完全移除独立的分数文本列表，仅保留维度条状图) -->
     <div id="resultSection" class="hidden">
         <div class="result-card">
             <div style="margin-bottom: 6px;"><i class="fas fa-dragon"></i> 你的肠格型号</div>
             <div class="result-type" id="resultTypeCode">GNTI</div>
-            <div class="type-nickname" id="resultNickname">六边形战士</div>
-            <!-- 图片占位区域 —— 为每种人格留出形象位置 -->
+            
+            <!-- 图片位置：放在肠格字母与肠格名称中间 -->
             <div class="illustration-placeholder" id="imagePlaceholder">
                 <i class="fas fa-fill-drip"></i>
-                <span>🧑‍🎨【肠道小灵·角色形象预留】</span>
-                <span style="font-size: 12px;">✨ 专属人格插图 ✨</span>
+                <span style="font-size: 12px;">✨ 人格插图预留位 ✨</span>
             </div>
+            
+            <div class="type-nickname" id="resultNickname">六边形战士</div>
+            <div class="type-slogan" id="resultSlogan">我是正面人物！主角！</div>
+
+            <!-- 维度条状图（包含分数在标签中，但无外部纯文本列表） -->
             <div class="dimension-bars" id="dimensionBars"></div>
-            <div class="dimension-scores" id="dimensionScores"></div>
+            
             <div class="description" id="typeDescription">描述加载中...</div>
             <div class="action-group">
                 <button class="btn restart-btn" id="retakeFromResultBtn" style="flex:1;"><i class="fas fa-undo-alt"></i> 重新探索</button>
@@ -377,14 +379,12 @@
             <p style="margin-top: 18px; font-size:0.75rem; opacity:0.7;"><i class="far fa-comment-dots"></i> 肠格测试仅供参考，严重不适请及时就医</p>
         </div>
     </div>
-    <div class="footer-note">
-        <i class="fas fa-apple-alt"></i> 根据真实饮食习惯 · 挖掘你的肠道人格原型
-    </div>
+    <!-- 底部无任何“根据真实饮食习惯...”文字 -->
 </div>
 
 <script>
     (function(){
-        // ----------------------------- 维度定义 ---------------------------
+        // 维度定义
         const dimensions = [
             { name: '耐受度', left: 'G', right: 'S', leftName: '强韧耐造', rightName: '娇嫩敏感' },
             { name: '营养供给', left: 'A', right: 'N', leftName: '外补依赖', rightName: '内源自给' },
@@ -392,52 +392,27 @@
             { name: '屏障', left: 'I', right: 'D', leftName: '稳固完整', rightName: '屏障受损' }
         ];
 
-        // ----------------------------- 十六型肠格数据库 (基于文件内容 昵称+解释+预留图片区域) ----------
+        // 十六型肠格库 (完整昵称+金句+描述)
         const typeMap = {
-            "GNTI": { nickname: "六边形战士 · 满级天花板", desc: "我是正面人物！主角！集齐G强韧耐造、N内源自给、T规律顺畅、I稳固完整四大顶配buff。冷热混吃不翻车，跨地区出行顺利，菌群活力，排便丝滑，黏膜屏障稳固，免疫拉满。别人的肠道在渡劫，你的肠道在度假。" },
-            "GNTD": { nickname: "不粘锅 · 美颜滤镜十级", desc: "G强韧、N自给、T规律，唯独D屏障受损悄悄拖后腿，活成自带美颜的肠道FAKER！表面吃嘛嘛香，实则熬夜压力已损伤黏膜。底子够硬，稍调整作息就能回归满分状态。" },
-            "GNUI": { nickname: "忍者神龟 · 熬屎意小能手", desc: "G强韧、N自给、I屏障稳固，唯独U节律紊乱让你变成能憋能扛的熬屎意小霸王！便意总被打断，节奏变随缘模式。只要定个排便闹钟改掉憋便坏习惯，很快找回顺畅节律。" },
-            "GNUD": { nickname: "永动机 · 人形陀螺", desc: "G强韧耐造、N内源自给给你奋斗底气，但U节律紊乱+D屏障受损让你停不下来。忙到憋便，KPI压力拉满，熬夜应酬，肠道默默扛下所有。奋斗同时记得给肠道放个假。" },
-            "GATI": { nickname: "天选干饭人 · 饭压抑者", desc: "G强韧耐造给你干饭自由，T规律+I屏障稳固保底，A外补依赖让你美食补剂库库炫。顿顿外卖奶茶，有益菌缺粮只能靠补剂续命，记得多吃膳食纤维哦！" },
-            "GATD": { nickname: "广东双马尾 · 百毒不侵假象", desc: "G强韧+T规律让你看起来打不死小强，耐受力强，但A外补依赖让菌群缺粮，D屏障受损让黏膜带伤工作，表面百毒不侵，肠道负重前行。" },
-            "GAUD": { nickname: "嘴硬学家 · 伪装大师", desc: "仅凭G强韧耐造就自认天选铁肠胃，实则A外补依赖+U节律紊乱+D屏障受损三重暴击，背地里便秘胀气全靠补剂。承认肠道需要呵护不丢人。" },
-            "GAUI": { nickname: "喷射战士 · 大便超人", desc: "G强韧耐造+I屏障稳固给你不错底子，但A外补依赖使菌群失衡，U节律紊乱让排便彻底放飞。别人排便看时间，你排便看缘分，调整饮食和规律便便吧。" },
-            "SNTI": { nickname: "瓷娃娃 · 豌豆公主", desc: "N内源自给+T规律+I屏障稳固是养肠达人配置，唯独S娇嫩敏感让你成了肠道瓷娃娃！换牛奶品牌、情绪小波动肠道就撒娇。慢慢摸索耐受边界，温柔待它。" },
-            "SNTD": { nickname: "底线蹦迪人 · 自律二极管", desc: "S娇嫩敏感让你饮食让步多吃膳食纤维，有了N自给+T规律，唯独D屏障受损代表你夜间出动、小酌一杯、月亮不睡你不睡。守住底线肠道就乖乖听话。" },
-            "SNUI": { nickname: "屎途刑者 · 内卷之王", desc: "S娇嫩敏感让你早早养肠，N自给+I稳固基础扎实，唯独U节律紊乱让你和自己较劲。饮食健康作息规律却仍被突发腹泻和便秘折磨，别急，肠道节律需要时间。" },
-            "SNUD": { nickname: "又菜又爱玩 · 抖M患者", desc: "S娇嫩不敢造次，养出N自给肠胃，奈何U节律紊乱+D屏障受损说明你又菜又爱玩。饮食谨慎却在熬夜酗酒上放纵，给肠道出难题，改掉坏习惯吧。" },
-            "SATI": { nickname: "真香循环 · FLAG收藏家", desc: "S娇嫩吃重口必翻车，T规律+I屏障让你恢复快，A外补依赖让你忍不住顿顿外卖。每次疼得直不起腰立flag“吃完这顿就收手”，下次秒变真香现场。" },
-            "SATD": { nickname: "摆烂人 · 吗喽拖延症", desc: "S娇嫩肠道脆弱，T规律顺畅是唯一底气，而A外补依赖+D屏障受损让你对肠道摆烂。不主动调整，不拒绝重油，不负责后果。稍微用点心养肠会有惊喜。" },
-            "SAUI": { nickname: "咸鱼·不翻身版 · 休息者", desc: "S娇嫩肠道易闹脾气，I屏障稳固不出大问题，U节律紊乱让排便随缘。你是躺平佛系派，肠道胀气就揉揉，腹泻就躺平。偶尔喂肠道粗粮蔬菜别太依赖补剂。" },
-            "SAUD": { nickname: "终身进步者 · 潜能无限家", desc: "集齐S娇嫩+A外补依赖+U节律紊乱+D屏障受损四大挑战，意味着你是肠道的终身进步者！拥有99.99%上升空间，每个小小的养肠举动都会带来巨大改善，未来可期。" }
+            "GNTI": { nickname: "六边形战士 ", slogan: "我是正面人物！主角！", desc: "集齐G强韧耐造、N内源自给、T规律顺畅、I稳固完整四大顶配buff。冷热混吃不翻车，跨地区出行顺利，菌群活力，排便丝滑，黏膜屏障稳固，免疫拉满。别人的肠道在渡劫，你的肠道在度假。" },
+            "GNTD": { nickname: "不粘锅", slogan: "大概是昨天没休息好，反正肯定不是我肠道的问题", desc: "G强韧、N自给、T规律，唯独D屏障受损悄悄拖后腿，活成自带美颜的肠道FAKER！表面吃嘛嘛香，实则熬夜压力已损伤黏膜。底子够硬，稍调整作息就能回归满分状态。" },
+            "GNUI": { nickname: "忍者神龟", slogan: "呆一会就没屎意了，哎呀等有再去厕所吧", desc: "G强韧、N自给、I屏障稳固，唯独U节律紊乱让你变成能憋能扛的熬屎意小霸王！便意总被打断，节奏变随缘模式。只要定个排便闹钟改掉憋便坏习惯，很快找回顺畅节律。" },
+            "GNUD": { nickname: "永动机", slogan: "好忙好忙好忙，什么也无法阻挡我前进的脚步", desc: "G强韧耐造、N内源自给给你奋斗底气，但U节律紊乱+D屏障受损让你停不下来。忙到憋便，KPI压力拉满，熬夜应酬，肠道默默扛下所有。奋斗同时记得给肠道放个假。" },
+            "GATI": { nickname: "天选干饭人", slogan: "美食补剂库库炫，命运戏弄大馋猫", desc: "G强韧耐造给你干饭自由，T规律+I屏障稳固保底，A外补依赖让你美食补剂库库炫。顿顿外卖奶茶，有益菌缺粮只能靠补剂续命，记得多吃膳食纤维哦！" },
+            "GATD": { nickname: "广东双马尾", slogan: "表面百毒不侵，肠道负重前行", desc: "G强韧+T规律让你看起来打不死小强，耐受力强，但A外补依赖让菌群缺粮，D屏障受损让黏膜带伤工作，表面百毒不侵，肠道负重前行。" },
+            "GAUD": { nickname: "嘴硬学家", slogan: "告诉肠道谁才是身体的主人", desc: "仅凭G强韧耐造就自认天选铁肠胃，实则A外补依赖+U节律紊乱+D屏障受损三重暴击，背地里便秘胀气全靠补剂。承认肠道需要呵护不丢人。" },
+            "GAUI": { nickname: "喷射战士", slogan: "今天你拉屎了吗", desc: "G强韧耐造+I屏障稳固给你不错底子，但A外补依赖使菌群失衡，U节律紊乱让排便彻底放飞。别人排便看时间，你排便看缘分，调整饮食和规律便便吧。" },
+            "SNTI": { nickname: "瓷娃娃", slogan: "肠道：哎呀心情不好我要死一死", desc: "N内源自给+T规律+I屏障稳固是养肠达人配置，唯独S娇嫩敏感让你成了肠道瓷娃娃！换牛奶品牌、情绪小波动肠道就撒娇。慢慢摸索耐受边界，温柔待它。" },
+            "SNTD": { nickname: "底线蹦迪人", slogan: "吃健康食品，享纵情人生", desc: "S娇嫩敏感让你饮食让步多吃膳食纤维，有了N自给+T规律，唯独D屏障受损代表你夜间出动、小酌一杯、月亮不睡你不睡。守住底线肠道就乖乖听话。" },
+            "SNUI": { nickname: "屎途刑者", slogan: "循序渐进认真呵护，肠道自有回响", desc: "S娇嫩敏感让你早早养肠，N自给+I稳固基础扎实，唯独U节律紊乱让你和自己较劲。饮食健康作息规律却仍被突发腹泻和便秘折磨，别急，肠道节律需要时间。" },
+            "SNUD": { nickname: "又菜又爱玩", slogan: "我不是坑，我是在给肠道创造逆风翻盘的机会", desc: "S娇嫩不敢造次，养出N自给肠胃，奈何U节律紊乱+D屏障受损说明你又菜又爱玩。饮食谨慎却在熬夜酗酒上放纵，给肠道出难题，改掉坏习惯吧。" },
+            "SATI": { nickname: "真香循环", slogan: "吃完这顿就不吃了.....吗？", desc: "S娇嫩吃重口必翻车，T规律+I屏障让你恢复快，A外补依赖让你忍不住顿顿外卖。每次疼得直不起腰立flag“吃完这顿就收手”，下次秒变真香现场。" },
+            "SATD": { nickname: "摆烂人", slogan: "不主动、不拒绝、不负责", desc: "S娇嫩肠道脆弱，T规律顺畅是唯一底气，而A外补依赖+D屏障受损让你对肠道摆烂。不主动调整，不拒绝重油，不负责后果。稍微用点心养肠会有惊喜。" },
+            "SAUI": { nickname: "咸鱼·不翻身版", slogan: "房子着火我拍照，人生乱套我睡觉", desc: "S娇嫩肠道易闹脾气，I屏障稳固不出大问题，U节律紊乱让排便随缘。你是躺平佛系派，肠道胀气就揉揉，腹泻就躺平。偶尔喂肠道粗粮蔬菜别太依赖补剂。" },
+            "SAUD": { nickname: "终身进步者", slogan: "恭喜您！您拥有百分之九十九点九九的上升空间", desc: "集齐S娇嫩+A外补依赖+U节律紊乱+D屏障受损四大挑战，意味着你是肠道的终身进步者！拥有99.99%上升空间，每个小小的养肠举动都会带来巨大改善，未来可期。" }
         };
 
-        // ---------- 16道全新题目（基于文件问卷表，完全按照1.1~4.4设计）----------
-        // 维度0:耐受度(G-S) 高分=G强韧；维度1营养供给(A-N) 需反向计分(因为原始题目描述倾向于N内源自给，最终我们要将维度1得分反转高分为A)
-        // 维度2节律(T-U) 高分=T规律；维度3屏障(I-D) 高分=I稳固
-        const questions = [
-            // 耐受度 4题 (每题1~5分，直接累加，越高→G)
-            { dim:0, text: "饮食大杂烩挑战：我可以冷热混吃（如火锅配冰饮）或尝试爆辣、重油食物，且事后肠胃基本无感。", options: getLikertOptions() },
-            { dim:0, text: "环境适应力：换城市出差、旅游或更换常喝的水品牌/外卖店时，我几乎不会出现水土不服或拉肚子的情况。", options: getLikertOptions() },
-            { dim:0, text: "极端压力测试：即使偶尔暴饮暴食、应酬喝酒或因为忙碌饥一顿饱一顿，我的肠道也不会立刻“罢工”或翻车。", options: getLikertOptions() },
-            { dim:0, text: "情绪波动免疫：在面对考试、演讲或工作高压时，我的肠道很淡定，不会因为紧张焦虑而频繁跑厕所。", options: getLikertOptions() },
-            // 营养供给 4题 (题目自然描述偏向N内源自给 → 反向计分，让高分最终对应A外补依赖)
-            { dim:1, text: "食材天然度：我的日常餐食多为亲手烹饪或健康的天然食材，极少依赖外卖、方便面或高添加剂的预制菜。", options: getLikertOptions() },
-            { dim:1, text: "膳食纤维密度：我每天都能摄入足量的深色蔬菜、全谷物（粗粮/杂豆）和新鲜果蔬，而不是纯肉主义。", options: getLikertOptions() },
-            { dim:1, text: "补剂依赖度：我的肠道很舒服，不需要长期靠益生菌、纤维粉等外源补剂来维持日常代谢。", options: getLikertOptions() },
-            { dim:1, text: "结构稳定性：我的饮食结构非常规律，不会为了减肥而极端节食或戒掉碳水。", options: getLikertOptions() },
-            // 节律 4题 (正向: 高分→T规律顺畅)
-            { dim:2, text: "排便生物钟：我有非常固定的排便习惯（如晨起或餐后），每天1-2次，且过程顺畅，不会在马桶上“长跑”。", options: getLikertOptions() },
-            { dim:2, text: "事后反馈：每次排便后感觉非常轻松、排得干净，便便成型且软硬适中，基本不会出现粘马桶或里急后重感。", options: getLikertOptions() },
-            { dim:2, text: "日常腹感：饭后我极少感到肚子胀气、鼓胀或出现明显的“肠鸣”声，小腹常年处于平坦舒畅的状态。", options: getLikertOptions() },
-            { dim:2, text: "节律韧性：即使偶尔熬夜或作息变动，我的肠道也能在1天内恢复排便规律，不会陷入数天不排或无预兆腹泻。", options: getLikertOptions() },
-            // 屏障 4题 (正向: 高分→I稳固完整)
-            { dim:3, text: "睡眠与昼夜节律：我作息规律，很少熬夜，每天能保证高质量且充足的睡眠，且没有长期黑白颠倒。", options: getLikertOptions() },
-            { dim:3, text: "药物史与炎症：近三个月内我没有使用过抗生素、止痛药或激素类药物，且没有频繁发作的肠胃炎史。", options: getLikertOptions() },
-            { dim:3, text: "情绪与内耗：我的情绪状态长期稳定，很少处于极度高压、焦虑或抑郁的心理内耗中。", options: getLikertOptions() },
-            { dim:3, text: "系统性表现：我的皮肤状态稳定（不易爆痘），身体免疫力好（不易过敏/感冒），且全天精力充沛，少有疲劳感。", options: getLikertOptions() }
-        ];
-
+        // 16道题目 (基于问卷)
         function getLikertOptions() {
             return [
                 { text: "完全不符合", score: 1 },
@@ -447,13 +422,30 @@
                 { text: "完全符合", score: 5 }
             ];
         }
+        const questions = [
+            { dim:0, text: "饮食大杂烩挑战：我可以冷热混吃（如火锅配冰饮）或尝试爆辣、重油食物，且事后肠胃基本无感。", options: getLikertOptions() },
+            { dim:0, text: "环境适应力：换城市出差、旅游或更换常喝的水品牌/外卖店时，我几乎不会出现水土不服或拉肚子的情况。", options: getLikertOptions() },
+            { dim:0, text: "极端压力测试：即使偶尔暴饮暴食、应酬喝酒或因为忙碌饥一顿饱一顿，我的肠道也不会立刻“罢工”或翻车。", options: getLikertOptions() },
+            { dim:0, text: "情绪波动免疫：在面对考试、演讲或工作高压时，我的肠道很淡定，不会因为紧张焦虑而频繁跑厕所。", options: getLikertOptions() },
+            { dim:1, text: "食材天然度：我的日常餐食多为亲手烹饪或健康的天然食材，极少依赖外卖、方便面或高添加剂的预制菜。", options: getLikertOptions() },
+            { dim:1, text: "膳食纤维密度：我每天都能摄入足量的深色蔬菜、全谷物（粗粮/杂豆）和新鲜果蔬，而不是纯肉主义。", options: getLikertOptions() },
+            { dim:1, text: "补剂依赖度：我的肠道很舒服，不需要长期靠益生菌、纤维粉等外源补剂来维持日常代谢。", options: getLikertOptions() },
+            { dim:1, text: "结构稳定性：我的饮食结构非常规律，不会为了减肥而极端节食或戒掉碳水。", options: getLikertOptions() },
+            { dim:2, text: "排便生物钟：我有非常固定的排便习惯（如晨起或餐后），每天1-2次，且过程顺畅，不会在马桶上“长跑”。", options: getLikertOptions() },
+            { dim:2, text: "事后反馈：每次排便后感觉非常轻松、排得干净，便便成型且软硬适中，基本不会出现粘马桶或里急后重感。", options: getLikertOptions() },
+            { dim:2, text: "日常腹感：饭后我极少感到肚子胀气、鼓胀或出现明显的“肠鸣”声，小腹常年处于平坦舒畅的状态。", options: getLikertOptions() },
+            { dim:2, text: "节律韧性：即使偶尔熬夜或作息变动，我的肠道也能在1天内恢复排便规律，不会陷入数天不排或无预兆腹泻。", options: getLikertOptions() },
+            { dim:3, text: "睡眠与昼夜节律：我作息规律，很少熬夜，每天能保证高质量且充足的睡眠，且没有长期黑白颠倒。", options: getLikertOptions() },
+            { dim:3, text: "药物史与炎症：近三个月内我没有使用过抗生素、止痛药或激素类药物，且没有频繁发作的肠胃炎史。", options: getLikertOptions() },
+            { dim:3, text: "情绪与内耗：我的情绪状态长期稳定，很少处于极度高压、焦虑或抑郁的心理内耗中。", options: getLikertOptions() },
+            { dim:3, text: "系统性表现：我的皮肤状态稳定（不易爆痘），身体免疫力好（不易过敏/感冒），且全天精力充沛，少有疲劳感。", options: getLikertOptions() }
+        ];
 
-        // 状态管理
         let currentIndex = 0;
         let answers = new Array(questions.length).fill(null);
         let testCompleted = false;
 
-        // DOM元素
+        // DOM
         const testSection = document.getElementById('testSection');
         const resultSection = document.getElementById('resultSection');
         const questionText = document.getElementById('questionText');
@@ -469,9 +461,9 @@
         const progressFill = document.getElementById('progressFill');
         const resultTypeCode = document.getElementById('resultTypeCode');
         const resultNickname = document.getElementById('resultNickname');
+        const resultSlogan = document.getElementById('resultSlogan');
         const typeDescription = document.getElementById('typeDescription');
         const dimensionBars = document.getElementById('dimensionBars');
-        const dimensionScores = document.getElementById('dimensionScores');
         const imagePlaceholder = document.getElementById('imagePlaceholder');
 
         function updateProgress() {
@@ -488,7 +480,6 @@
             dimensionRange.innerText = `${dim.left} ⇄ ${dim.right}`;
             questionNumLabel.innerText = `第 ${currentIndex+1} / 16 题`;
             questionText.innerText = q.text;
-            
             const selectedScore = answers[currentIndex];
             let html = '';
             q.options.forEach(opt => {
@@ -499,9 +490,8 @@
                          </div>`;
             });
             optionsDiv.innerHTML = html;
-            
             document.querySelectorAll('.option-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
+                btn.addEventListener('click', () => {
                     const scoreVal = parseInt(btn.dataset.score);
                     answers[currentIndex] = scoreVal;
                     renderQuestion();
@@ -523,17 +513,11 @@
             nextBtn.disabled = !hasAnswer;
         }
 
-        function goToPrev() {
-            if(currentIndex > 0) { currentIndex--; renderQuestion(); }
-        }
+        function goToPrev() { if(currentIndex > 0) { currentIndex--; renderQuestion(); } }
         function goToNext() {
             if(answers[currentIndex] === null) return;
-            if(currentIndex === questions.length-1) {
-                finishTest();
-            } else {
-                currentIndex++;
-                renderQuestion();
-            }
+            if(currentIndex === questions.length-1) finishTest();
+            else { currentIndex++; renderQuestion(); }
         }
 
         function finishTest() {
@@ -543,36 +527,29 @@
                 if(firstNull !== -1) { currentIndex = firstNull; renderQuestion(); }
                 return;
             }
-            testCompleted = true;
-            // 计算维度分 (每个维度4题，总分范围4-20，阈值10)
+            // 计算分数
             let rawScores = [0,0,0,0];
             for(let i=0; i<questions.length; i++) {
                 let score = answers[i];
                 let dimIdx = questions[i].dim;
-                // 维度1 (营养供给) 需要反向计分，因为原始题目是N倾向，我们需要最终高分为A（外补依赖）
-                if(dimIdx === 1) {
-                    score = 6 - score;   // 反转: 原始高分(健康天然)变成低分，原始低分变成高分 -> 符合A(外补依赖)高分
-                }
+                if(dimIdx === 1) score = 6 - score; // 反向，使高分→A
                 rawScores[dimIdx] += score;
             }
-            // rawScores[0]耐受 G分   rawScores[1]营养 A倾向高分   rawScores[2]节律 T高分   rawScores[3]屏障 I高分
             const typeChars = [];
             for(let i=0;i<4;i++) {
-                if(rawScores[i] > 10) typeChars.push(dimensions[i].left);
-                else typeChars.push(dimensions[i].right);
+                typeChars.push(rawScores[i] > 10 ? dimensions[i].left : dimensions[i].right);
             }
             const finalCode = typeChars.join('');
-            const typeData = typeMap[finalCode] || { nickname: "神秘肠格", desc: "独特肠道人格，等待你的探索。" };
+            const typeData = typeMap[finalCode] || { nickname: "神秘肠格", slogan: "待解锁", desc: "独特肠道人格。" };
             
-            // 更新结果展示
             resultTypeCode.innerText = finalCode;
             resultNickname.innerText = typeData.nickname;
+            resultSlogan.innerText = typeData.slogan;
             typeDescription.innerText = typeData.desc;
-            // 图片占位区 增加风格提示
-            imagePlaceholder.innerHTML = `<i class="fas fa-dragon"></i><span>🧙 【${typeData.nickname}】专属立绘预留</span><span style="font-size: 12px;">🎨 插图位置 · 个性小人待召唤</span>`;
-            // 绘制维度条 & 分数详解 (最大分20)
+            imagePlaceholder.innerHTML = `<i class="fas fa-dragon"></i><span>【${typeData.nickname}】专属立绘预留</span><span style="font-size: 12px;">插图位置 </span>`;
+            
+            // 绘制条状图 (不再额外显示独立分数列表)
             renderDimensionBars(rawScores);
-            renderDimensionScores(rawScores);
             
             testSection.classList.add('hidden');
             resultSection.classList.remove('hidden');
@@ -599,23 +576,9 @@
                 createBar(2, 'T 规律顺畅', 'U 节律紊乱', scores[2]) +
                 createBar(3, 'I 稳固完整', 'D 屏障受损', scores[3]);
         }
-        
-        function renderDimensionScores(scores) {
-            if(!dimensionScores) return;
-            const dimNames = ['耐受度', '营养供给', '排便节律', '屏障完整'];
-            const leftTips = ['G强韧耐造','A外补依赖','T规律顺畅','I稳固完整'];
-            const rightTips = ['S娇嫩敏感','N内源自给','U节律紊乱','D屏障受损'];
-            let html = '<div style="display:grid; gap:8px;">';
-            for(let i=0;i<4;i++) {
-                const tendency = scores[i] > 10 ? leftTips[i] : rightTips[i];
-                html += `<div style="display:flex; justify-content:space-between;"><span>${dimNames[i]}: ${scores[i]}/20分</span><span style="font-weight:600;">→ ${tendency}</span></div>`;
-            }
-            html += '</div>';
-            dimensionScores.innerHTML = html;
-        }
 
         function resetTest() {
-            if(confirm('重新测试将会清空当前所有进度，确定重测吗？')) {
+            if(confirm('重新测试将会清空所有进度，确定重测吗？')) {
                 currentIndex = 0;
                 answers = new Array(questions.length).fill(null);
                 testCompleted = false;
@@ -626,21 +589,16 @@
             }
         }
 
-        // 绑定事件
         prevBtn.addEventListener('click', goToPrev);
         nextBtn.addEventListener('click', goToNext);
         restartTestBtn.addEventListener('click', resetTest);
         retakeFromResultBtn.addEventListener('click', resetTest);
-        
-        // 键盘左右支持
         window.addEventListener('keydown', (e) => {
             if(!testSection.classList.contains('hidden')) {
                 if(e.key === 'ArrowLeft' && !prevBtn.disabled) goToPrev();
                 else if(e.key === 'ArrowRight' && !nextBtn.disabled) goToNext();
             }
         });
-        
-        // 启动
         renderQuestion();
         updateProgress();
     })();
