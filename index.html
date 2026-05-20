@@ -376,7 +376,7 @@
             <div class="action-group">
                 <button class="btn restart-btn" id="retakeFromResultBtn" style="flex:1;"><i class="fas fa-undo-alt"></i> 重新探索</button>
             </div>
-            <p style="margin-top: 18px; font-size:0.75rem; opacity:0.7;"><i class="far fa-comment-dots"></i> 肠格测试仅供参考，严重不适请及时就医</p>
+            <p style="margin-top: 18px; font-size:0.75rem; opacity:0.7;"><i class="far fa-comment-dots"></i> 肠格测试仅供娱乐，更多肠道信息可购买华大益人益方产品</p>
         </div>
     </div>
     <!-- 底部无任何“根据真实饮食习惯...”文字 -->
@@ -536,7 +536,7 @@
             }
             const typeChars = [];
             for(let i=0;i<4;i++) {
-                typeChars.push(rawScores[i] > 10 ? dimensions[i].left : dimensions[i].right);
+                typeChars.push(rawScores[i] > 12 ? dimensions[i].left : dimensions[i].right);
             }
             const finalCode = typeChars.join('');
             const typeData = typeMap[finalCode] || { nickname: "神秘肠格", slogan: "待解锁", desc: "独特肠道人格。" };
